@@ -211,10 +211,9 @@ class PrometheusCharm(CharmBase):
 
         if self.model.get_relation("ingress"):
             port = str(self.model.config["port"])
-            path = self.app.name  # Same as "service-name" in the ingress relation
 
             # TODO The ingress should communicate the externally-visible scheme
-            external_url = f"http://{self._external_hostname}:{port}/{path}"
+            external_url = f"http://{self._external_hostname}:{port}"
 
             args.append(f"--web.external-url={external_url}")
 
@@ -452,6 +451,7 @@ class PrometheusCharm(CharmBase):
         info = prometheus.build_info()
         if info:
             return info.get("version", None)
+        self.unit.status = MaintenanceStatus("Prometheus provider is not yet ready.")
         return None
 
     @property

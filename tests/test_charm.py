@@ -92,7 +92,7 @@ class TestCharm(unittest.TestCase):
         plan = self.harness.get_container_pebble_plan("prometheus")
         self.assertEqual(
             cli_arg(plan, "--web.external-url"),
-            "http://prometheus-k8s.juju:9090/prometheus-k8s",
+            "http://prometheus-k8s.juju:9090",
         )
 
     @patch("ops.testing._TestingPebbleClient.push")
